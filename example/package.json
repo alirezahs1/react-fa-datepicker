@@ -10,10 +10,13 @@
     "eject": "node ../node_modules/react-scripts/bin/react-scripts.js eject"
   },
   "dependencies": {
+    "node-sass": "^7.0.1",
     "react": "file:../node_modules/react",
     "react-dom": "file:../node_modules/react-dom",
+    "react-fa-datepicker": "file:..",
     "react-scripts": "file:../node_modules/react-scripts",
-    "react-fa-datepicker": "file:.."
+    "sass": "^1.48.0",
+    "styled-components": "^5.3.3"
   },
   "devDependencies": {
     "@babel/plugin-syntax-object-rest-spread": "^7.8.3"

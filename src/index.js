@@ -1,6 +1,8 @@
 import React from 'react'
-import styles from './styles.module.css'
+import Calendar from './components/Calendar';
+import DatePicker from './components/DatePicker';
 
-export const ExampleComponent = ({ text }) => {
-  return <div className={styles.test}>Example Component: {text}</div>
+export {
+	Calendar,
+	DatePicker,
 }
