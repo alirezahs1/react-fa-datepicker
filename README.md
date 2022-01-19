@@ -27,7 +27,7 @@ const MyComponent = () => {
 			format="YYYY-M-D"
 			defaultValue={selectedDate}
 			onChange={(d) => setSelectedDate(d)}
-			/>
+		/>
 	)
 }
 
