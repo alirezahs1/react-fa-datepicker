@@ -1,7 +1,7 @@
 {
   "name": "react-fa-datepicker",
   "version": "1.0.0",
-  "description": "Made with create-react-library",
+  "description": "Persian Calendar and DatePicker for React",
   "author": "alirezahs1",
   "license": "MIT",
   "repository": "alirezahs1/react-fa-datepicker",
