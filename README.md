@@ -23,7 +23,11 @@ const MyComponent = () => {
 	const [selectedDate, setSelectedDate] = useState("1377-12-08");
 
 	return (
-		<DatePicker format="YYYY-M-D" defaultValue={selectedDate} onChange={(d) => setSelectedDate(d)} />
+		<DatePicker
+			format="YYYY-M-D"
+			defaultValue={selectedDate}
+			onChange={(d) => setSelectedDate(d)}
+			/>
 	)
 }
 
