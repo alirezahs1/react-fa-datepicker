@@ -5,6 +5,9 @@ import './style.css';
 
 const Title = styled.h1`
 	text-align: center;
+	@media only screen and (max-width: 600px) {
+		font-size: 1.4rem;
+	}
 `
 
 const Code = styled.pre`
@@ -17,7 +20,7 @@ const Code = styled.pre`
     font-size: 15px;
     line-height: 1.6;
     margin-bottom: 1.6em;
-    max-width: 100%;
+    /* max-width: 100%; */
     overflow: auto;
     padding: 1em 1.5em;
     display: block;
@@ -30,6 +33,7 @@ const Copyright = styled.div`
 	text-align: center;
 	color: #333;
 	padding: 25px;
+	/* max-width: 100%; */
 	a {
 		text-decoration: none;
 		color: #0033B6;
@@ -39,7 +43,7 @@ const Copyright = styled.div`
 const Style = styled.div`
 	.container {
 		max-width: 1080px;
-		width: 100%;
+		/* width: 100%; */
 		margin: 15px auto;
 		padding: 15px;
 		border-radius: 4px;

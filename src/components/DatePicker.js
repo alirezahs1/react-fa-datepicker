@@ -52,13 +52,17 @@ const DatePickerStyle = styled.div`
 			position: absolute;
 			top: 100%;
 			/* left: 50%; */
-			transform: translateY(-10px);
+			transform: translate(0, -10px);
 			transition: opacity .2s, transform .2s;
 			right: 0;
 			opacity: 0;
 			pointer-events: none;
 			z-index: 10;
 			box-shadow: 0px 4px 10px rgba(0, 0, 0, .08);
+			@media only screen and (max-width: 600px) {
+				right: 50%;
+				transform: translate(50%, -10px);
+			}
 		}
 	}
 	${({isCalendarOpen}) => isCalendarOpen ? `
@@ -66,7 +70,10 @@ const DatePickerStyle = styled.div`
 			&__calendar {
 				opacity: 1;
 				pointer-events: all;
-				transform: translateY(0);
+				transform: translate(0);
+				@media only screen and (max-width: 600px) {
+					transform: translate(50%, 0);
+				}
 			}
 		}
 	` : ''}

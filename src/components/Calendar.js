@@ -8,6 +8,9 @@ const CalendarStyle = styled.div`
 	text-align: center;
 	width: max-content;
 	border-radius: 4px;
+	@media only screen and (max-width: 600px) {
+		padding: 25px 15px;
+	}
 	.cal {
 		&__header {
 			display: flex;
@@ -31,6 +34,9 @@ const CalendarStyle = styled.div`
 			display: flex;
 			flex-wrap: wrap;
 			width: 350px;
+			@media only screen and (max-width: 600px) {
+				width: 280px;
+			}
 			&__cell {
 				position: relative;
 				width: calc(100% / 7);
@@ -40,6 +46,9 @@ const CalendarStyle = styled.div`
 				justify-content: center;
 				font-size: 14px;
 				user-select: none;
+				@media only screen and (max-width: 600px) {
+					height: 40px;
+				}
 				&::before {
 					position: absolute;
 					content: '';
@@ -50,6 +59,12 @@ const CalendarStyle = styled.div`
 					border-radius: 50%;
 					background-color: rgba(0, 0, 0, 0);
 					transition: border .2s, background-color .2s;
+					@media only screen and (max-width: 600px) {
+						left: 3px;
+						top: 1px;
+						right: 3px;
+						bottom: 5px;
+					}
 				}
 				&--head {
 					font-size: 11px;
