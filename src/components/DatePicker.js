@@ -50,18 +50,61 @@ const DatePickerStyle = styled.div`
 		&__calendar {
 			background-color: #fff;
 			position: absolute;
-			top: 100%;
-			/* left: 50%; */
-			transform: translate(0, -10px);
+			/* transform: translate(0, -10px); */
 			transition: opacity .2s, transform .2s;
-			right: 0;
 			opacity: 0;
 			pointer-events: none;
 			z-index: 10;
 			box-shadow: 0px 4px 10px rgba(0, 0, 0, .08);
+			${({calendarPosition}) => {
+				switch (calendarPosition) {
+					case 'top-right':
+						return `
+							bottom: 100%;
+							right: 0;
+						`
+						break;
+					case 'top-left':
+						return `
+							bottom: 100%;
+							left: 0;
+						`
+						break;
+					case 'top':
+					case 'top-center':
+						return `
+							bottom: 100%;
+							left: 50%;
+							transform: translateX(-50%);
+						`
+						break;
+					case 'bottom-left':
+						return `
+							top: 100%;
+							left: 0;
+						`
+						break;
+					case 'bottom':
+					case 'bottom-center':
+						return `
+							top: 100%;
+							left: 50%;
+							transform: translateX(-50%);
+						`
+						break;
+					case 'bottom-right':
+					default:
+						return `
+							top: 100%;
+							right: 0;
+						`
+						break;
+				}
+			}}
 			@media only screen and (max-width: 600px) {
+				left: none;
 				right: 50%;
-				transform: translate(50%, -10px);
+				transform: translateX(50%);
 			}
 		}
 	}
@@ -70,15 +113,15 @@ const DatePickerStyle = styled.div`
 			&__calendar {
 				opacity: 1;
 				pointer-events: all;
-				transform: translate(0);
+				// transform: translate(0);
 				@media only screen and (max-width: 600px) {
-					transform: translate(50%, 0);
+					// transform: translate(50%, 0);
 				}
 			}
 		}
 	` : ''}
 `
-export const DatePicker = ({className, defaultValue, onChange, format, inputClassName, ...otherProps}) => {
+export const DatePicker = ({className, defaultValue, onChange, format, inputClassName, calendarPosition, ...otherProps}) => {
 
 	const [value, setValue] = useState(defaultValue);
 	const [isCalendarOpen, setIsCalendarOpen] = useState(false);
@@ -118,7 +161,7 @@ export const DatePicker = ({className, defaultValue, onChange, format, inputClas
 	}
 
 	return (
-		<DatePickerStyle ref={containerRef} isCalendarOpen={isCalendarOpen} className={className}>
+		<DatePickerStyle ref={containerRef} isCalendarOpen={isCalendarOpen} className={className} calendarPosition={calendarPosition}>
 			<input readOnly={true} className={`${inputClassName} dpicker__input`} value={value} onClick={handleInputFocus} onFocus={handleInputFocus} />
 			<Calendar className="dpicker__calendar" defaultValue={defaultValue} onChange={handleChange} {...otherProps} />
 		</DatePickerStyle>

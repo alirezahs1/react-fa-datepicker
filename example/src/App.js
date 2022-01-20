@@ -61,7 +61,7 @@ const App = () => {
 				</Code>
 
 				<br/>
-				
+
 				<h2>تقویم</h2>
 				<Calendar 
 					className="mx-auto" 
@@ -100,6 +100,7 @@ const App = () => {
 					onChange={(selectedDate, dateObject) => console.log(selectedDate, dateObject)} 
 					prevYears={10} 
 					nextYears={0}
+					calendarPosition='bottom-right'
 				/>
 				<br/>
 				<Code language="javascript" style={darcula}>
@@ -112,6 +113,7 @@ const App = () => {
 	onChange={(selectedDate, dateObject) => console.log(selectedDate, dateObject)}
 	prevYears={10} // generates from 10 years ago
 	nextYears={0} // generates to next 0 years
+	calendarPosition='bottom-right' // top-right | top-left | top-center | bottom-right | bottom-center | bottom-left
 	// ...
 	// and all Calendar props
 	/>
