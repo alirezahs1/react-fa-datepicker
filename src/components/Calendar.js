@@ -19,6 +19,9 @@ const CalendarStyle = styled.div`
 			font-size: 1rem;
 			margin-bottom: 15px;
 			justify-content: space-between;
+			@media only screen and (max-width: 600px) {
+				margin-bottom: 0;
+			}
 			&__month {
 				color: #0033B6;
 				cursor: pointer;
@@ -79,6 +82,14 @@ const CalendarStyle = styled.div`
 				&--head {
 					font-size: 11px;
 					/* border: 1px solid; */
+					@media only screen and (max-width: 600px) {
+						/* visibility: hidden; */
+						font-size: 0;
+						&::after {
+							content: attr(data-shortname);
+							font-size: 14px;
+						}
+					}
 				}
 				&--active {
 					cursor: pointer;
@@ -238,7 +249,7 @@ const Calendar = ({className, defaultValue, onChange, format="YYYY-M-D", prevYea
 			<div className="cal__body">
 				<div className="cal__table">
 					{weekDaysNames.map(d => 
-							<div key={d} className="cal__table__cell cal__table__cell--head">{d}</div>
+							<div key={d} className="cal__table__cell cal__table__cell--head" data-shortname={d.substr(0, 1)}>{d}</div>
 						)}
 					{getCurrentEmptyDays(now).map(day => 
 							<div key={day} className="cal__table__cell cal__table__cell--empty"></div>
