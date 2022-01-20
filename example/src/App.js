@@ -79,7 +79,7 @@ const App = () => {
 `import { Calendar } from 'react-fa-datepicker'
 
 <Calendar
-	defaultValue="1400-12-27"
+	defaultValue="1400-11-20"
 	format="YYYY-M-D"
 	onChange={(selectedDate, dateObject) => console.log(selectedDate, dateObject)} //check browser console
 	min="1400-11-10"
