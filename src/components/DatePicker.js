@@ -1,3 +1,4 @@
+import moment from "jalali-moment";
 import React, { useEffect, useRef, useState } from "react"
 import styled from 'styled-components'
 import Calendar from "./Calendar";
@@ -123,7 +124,7 @@ const DatePickerStyle = styled.div`
 `
 export const DatePicker = ({className, defaultValue, onChange, format, inputClassName, calendarPosition, ...otherProps}) => {
 
-	const [value, setValue] = useState(defaultValue);
+	const [value, setValue] = useState();
 	const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 	
 	const containerRef = useRef();
@@ -141,7 +142,7 @@ export const DatePicker = ({className, defaultValue, onChange, format, inputClas
 	}, [containerRef?.current])
 
 	useEffect(() => {
-		if (defaultValue !== undefined) {
+		if (defaultValue !== undefined && moment(defaultValue, format).isValid()) {
 			setValue(defaultValue);
 		}
 	}, [defaultValue])

@@ -96,7 +96,6 @@ const App = () => {
 				<DatePicker 
 					className="me-auto" 
 					defaultValue="1400/12/27"
-					defaultValue={""}
 					format="YYYY/M/D" 
 					onChange={(selectedDate, dateObject) => console.log(selectedDate, dateObject)} 
 					prevYears={10} 

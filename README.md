@@ -20,13 +20,17 @@ import { Calendar, DatePicker } from 'react-fa-datepicker';
 
 const MyComponent = () => {
 
-	const [selectedDate, setSelectedDate] = useState("1377-12-08");
+	const [selectedDate, setSelectedDate] = useState("1400/12/27");
 
 	return (
-		<DatePicker
-			format="YYYY-M-D"
+		<DatePicker 
+			className="me-auto" 
 			defaultValue={selectedDate}
-			onChange={(d) => setSelectedDate(d)}
+			format="YYYY/M/D" 
+			onChange={(selectedDate, dateObject) => setSelectedDate(selectedDate)} 
+			prevYears={10} 
+			nextYears={0}
+			calendarPosition='bottom-right'
 		/>
 	)
 }
