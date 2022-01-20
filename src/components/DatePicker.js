@@ -119,8 +119,8 @@ export const DatePicker = ({className, defaultValue, onChange, format, inputClas
 
 	return (
 		<DatePickerStyle ref={containerRef} isCalendarOpen={isCalendarOpen} className={className}>
-			<input className={`${inputClassName} dpicker__input`} value={value} onClick={handleInputFocus} onFocus={handleInputFocus} />
-			<Calendar className="dpicker__calendar" format={format} defaultValue={defaultValue} onChange={handleChange} />
+			<input readOnly={true} className={`${inputClassName} dpicker__input`} value={value} onClick={handleInputFocus} onFocus={handleInputFocus} />
+			<Calendar className="dpicker__calendar" defaultValue={defaultValue} onChange={handleChange} {...otherProps} />
 		</DatePickerStyle>
 	)
 }

@@ -2,6 +2,10 @@ import React from 'react'
 import { Calendar, DatePicker } from 'react-fa-datepicker'
 import styled from 'styled-components'
 import './style.css';
+// import SyntaxHighlighter from 'react-syntax-highlighter';
+import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
+import { docco } from 'react-syntax-highlighter/dist/esm/styles/hljs';
+import { dark, darcula } from 'react-syntax-highlighter/dist/esm/styles/prism';
 
 const Title = styled.h1`
 	text-align: center;
@@ -10,21 +14,7 @@ const Title = styled.h1`
 	}
 `
 
-const Code = styled.pre`
-	background: #f4f4f4;
-    border: 1px solid #ddd;
-    border-left: 3px solid #f36d33;
-    color: #444;
-    page-break-inside: avoid;
-    font-family: monospace;
-    font-size: 15px;
-    line-height: 1.6;
-    margin-bottom: 1.6em;
-    /* max-width: 100%; */
-    overflow: auto;
-    padding: 1em 1.5em;
-    display: block;
-    word-wrap: break-word;
+const Code = styled(props => <SyntaxHighlighter {...props} />)`
 	text-align: left;
 	direction: ltr;
 `
@@ -66,13 +56,25 @@ const App = () => {
 				<Title>تقویم و انتخاب کننده تاریخ فارسی برای ری‌اکت</Title>
 
 				<h2>نصب</h2>
-				<Code>
+				<Code language="bash" style={darcula}>
 					npm i --save react-fa-datepicker
 				</Code>
 
+				<br/>
+				
 				<h2>تقویم</h2>
-				<Calendar className="mx-auto" defaultValue="1400-12-27" format="YYYY-M-D" onChange={(selectedDate, dateObject) => console.log(selectedDate, dateObject)} />
-				<Code>
+				<Calendar 
+					className="mx-auto" 
+					defaultValue="1400-11-20" 
+					format="YYYY-M-D" 
+					onChange={(selectedDate, dateObject) => console.log(selectedDate, dateObject)} 
+					min="1400-11-10"
+					max="1400-12-20"
+					prevYears={3} 
+					nextYears={3} 
+					/>
+					<br/><br/>
+				<Code language="javascript" style={darcula}>
 					{
 `import { Calendar } from 'react-fa-datepicker'
 
@@ -80,13 +82,27 @@ const App = () => {
 	defaultValue="1400-12-27"
 	format="YYYY-M-D"
 	onChange={(selectedDate, dateObject) => console.log(selectedDate, dateObject)} //check browser console
+	min="1400-11-10"
+	max="1400-12-20"
+	prevYears={10} // generates from 10 years ago, limited by 'min' property (Check next example)
+	nextYears={0} // generates to next 0 years, limited by 'min' property (Check next example)
 	/>
 `}
 				</Code>
 
+				<br/><br/>
+
 				<h2>انتخاب کننده تاریخ</h2>
-				<DatePicker className="me-auto" defaultValue="1400/12/27" format="YYYY/M/D" onChange={(selectedDate, dateObject) => console.log(selectedDate, dateObject)}  />
-				<Code>
+				<DatePicker 
+					className="me-auto" 
+					defaultValue="1400/12/27" 
+					format="YYYY/M/D" 
+					onChange={(selectedDate, dateObject) => console.log(selectedDate, dateObject)} 
+					prevYears={10} 
+					nextYears={0}
+				/>
+				<br/>
+				<Code language="javascript" style={darcula}>
 					{
 `import { DatePicker } from 'react-fa-datepicker'
 
@@ -94,6 +110,10 @@ const App = () => {
 	defaultValue="1400/12/27"
 	format="YYYY/M/D"
 	onChange={(selectedDate, dateObject) => console.log(selectedDate, dateObject)}
+	prevYears={10} // generates from 10 years ago
+	nextYears={0} // generates to next 0 years
+	// ...
+	// and all Calendar props
 	/>
 `}
 				</Code>
