@@ -116,7 +116,13 @@ const CalendarStyle = styled.div`
 const Calendar = ({className, defaultValue, onChange, format="YYYY-M-D", prevYears=10, nextYears=0, min, max}) => {
 	
 	moment.locale('fa');
-	const m = defaultValue ? moment(defaultValue, format) : moment();
+	
+	let m;
+	if (defaultValue && moment(defaultValue, format).isValid()) {
+		m = moment(defaultValue, format);
+	} else {
+		m = moment();
+	}
 	
 	const [now, setNow] = useState(m);
 	const [selectedDay, setSelectedDay] = useState();
@@ -136,7 +142,7 @@ const Calendar = ({className, defaultValue, onChange, format="YYYY-M-D", prevYea
 	]
 
 	useEffect(() => {
-		if (defaultValue !== undefined) {
+		if (defaultValue !== undefined && moment(defaultValue, format).isValid()) {
 			setNow(moment(defaultValue, format));
 			setSelectedDay(moment(defaultValue, format));
 		}

@@ -95,7 +95,8 @@ const App = () => {
 				<h2>انتخاب کننده تاریخ</h2>
 				<DatePicker 
 					className="me-auto" 
-					defaultValue="1400/12/27" 
+					defaultValue="1400/12/27"
+					defaultValue={""}
 					format="YYYY/M/D" 
 					onChange={(selectedDate, dateObject) => console.log(selectedDate, dateObject)} 
 					prevYears={10} 
