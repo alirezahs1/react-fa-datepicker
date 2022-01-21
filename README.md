@@ -15,6 +15,9 @@ npm install --save react-fa-datepicker
 ## Demo
 ![React Farsi Calendar and Date Picker](https://github.com/alirezahs1/react-fa-datepicker/blob/master/example/public/demo.gif?raw=true)
 
+[Online Demo](https://alirezahs1.github.io/react-fa-datepicker/)
+
+
 ## Usage
 
 ```jsx
