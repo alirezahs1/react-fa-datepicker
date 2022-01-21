@@ -54,6 +54,7 @@ const CalendarStyle = styled.div`
 				width: calc(100% / 7);
 				height: 50px;
 				display: flex;
+				flex-direction: column;
 				align-items: center;
 				justify-content: center;
 				font-size: 14px;
@@ -79,6 +80,14 @@ const CalendarStyle = styled.div`
 						bottom: 5px;
 					}
 				}
+				&__meta {
+					font-size: 10px;
+					position: absolute;
+					bottom: 3px;
+					left: 50%;
+					transform: translateX(-50%);
+					transition: bottom .2s .3s;
+				}
 				&--head {
 					font-size: 11px;
 					/* border: 1px solid; */
@@ -103,6 +112,10 @@ const CalendarStyle = styled.div`
 					color: #0033B6;
 					&::before {
 						border-color: #0033B6;
+					}
+					.cal__table__cell__meta {
+						bottom: -3px;
+						transition: bottom .2s;
 					}
 				}
 				&--disabled {
@@ -172,9 +185,11 @@ const Calendar = ({className, defaultValue, onChange, format="YYYY-M-D", prevYea
 
 	const renderCell = (today) => {
 		
+		const isToday = moment().isSame(today, 'day');
+		
 		let cls = "cal__table__cell";
 
-		if (today.isSame(selectedDay, 'day')) {
+		if (selectedDay && today.isSame(selectedDay, 'day')) {
 			cls += ' cal__table__cell--selected';
 		}
 
@@ -185,7 +200,10 @@ const Calendar = ({className, defaultValue, onChange, format="YYYY-M-D", prevYea
 		}
 		
 		return (
-			<div key={today.date()} onClick={() => handleClickCell(today)} className={cls}>{today.date()}</div>
+			<div key={today.date()} onClick={() => handleClickCell(today)} className={cls} title={today.format("D MMMM YYYY")}>
+				{today.date()}
+				{isToday && <div className="cal__table__cell__meta">امروز</div>}
+			</div>
 		)
 	}
 

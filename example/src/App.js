@@ -65,10 +65,10 @@ const App = () => {
 				<h2>تقویم</h2>
 				<Calendar 
 					className="mx-auto" 
-					defaultValue="1400-11-20" 
+					// defaultValue="1400-11-20" 
 					format="YYYY-M-D" 
 					onChange={(selectedDate, dateObject) => console.log(selectedDate, dateObject)} 
-					min="1400-11-10"
+					// min="1400-11-10"
 					max="1400-12-20"
 					prevYears={3} 
 					nextYears={3} 
