@@ -1,4 +1,5 @@
 import moment from "jalali-moment";
+import PropTypes from 'prop-types';
 import React, { useEffect, useRef, useState } from "react"
 import styled from 'styled-components'
 import Calendar from "./Calendar";
@@ -142,8 +143,12 @@ export const DatePicker = ({className, defaultValue, onChange, format, inputClas
 	}, [containerRef?.current])
 
 	useEffect(() => {
-		if (defaultValue !== undefined && moment(defaultValue, format).isValid()) {
-			setValue(defaultValue);
+		if (defaultValue !== undefined) {
+			if (Array.isArray(defaultValue) && defaultValue?.every(d => moment(d, format).isValid() )) {
+				setValue(defaultValue);				
+			} else if (moment(defaultValue, format).isValid()) {
+				setValue(defaultValue);
+			}
 		}
 	}, [defaultValue])
 
@@ -167,6 +172,29 @@ export const DatePicker = ({className, defaultValue, onChange, format, inputClas
 			<Calendar className="dpicker__calendar" defaultValue={defaultValue} onChange={handleChange} {...otherProps} />
 		</DatePickerStyle>
 	)
+}
+
+DatePicker.propTypes = {
+	className: PropTypes.string,
+	defaultValue: PropTypes.string,
+	onChange: PropTypes.func,
+	format: PropTypes.string.isRequired,
+	inputClassName: PropTypes.string,
+	calendarPosition: PropTypes.oneOf([
+		"top-right",
+		"top-center",
+		"top-left",
+		"top",
+		"bottom-right",
+		"bottom-left",
+		"bottom-center",
+		"bottom"
+	])
+}
+
+DatePicker.defaultProps = {
+	format: "YYYY-M-D",
+	calendarPosition: "bottom-right"
 }
 
 export default DatePicker;

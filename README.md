@@ -12,6 +12,9 @@
 npm install --save react-fa-datepicker
 ```
 
+## Demo
+![React Farsi Calendar and Date Picker](https://github.com/alirezahs1/react-fa-datepicker/blob/master/example/public/demo.gif?raw=true)
+
 ## Usage
 
 ```jsx
@@ -24,7 +27,6 @@ const MyComponent = () => {
 
 	return (
 		<DatePicker 
-			className="me-auto" 
 			defaultValue={selectedDate}
 			format="YYYY/M/D" 
 			onChange={(selectedDate, dateObject) => setSelectedDate(selectedDate)} 

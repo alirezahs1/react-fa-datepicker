@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react"
+import PropTypes from 'prop-types';
 import moment, { months } from "jalali-moment";
 import styled from 'styled-components'
 import { DropDown } from "..";
@@ -126,7 +127,7 @@ const CalendarStyle = styled.div`
 		}
 	}
 `
-const Calendar = ({className, type="standard", defaultValue, onChange, format="YYYY-M-D", prevYears=10, nextYears=0, min, max}) => {
+const Calendar = ({className, type, defaultValue, onChange, format, prevYears, nextYears, min, max}) => {
 	
 	moment.locale('fa');
 	
@@ -156,14 +157,15 @@ const Calendar = ({className, type="standard", defaultValue, onChange, format="Y
 	]
 
 	useEffect(() => {
-		if (defaultValue !== undefined && moment(defaultValue, format).isValid()) {
-			setNow(moment(defaultValue, format));
-
+		if (defaultValue !== undefined) {
+			
 			if (type === "range") {
-				if (Array.isArray(defaultValue)) {
+				if (Array.isArray(defaultValue) && defaultValue?.every(d => moment(d, format).isValid() )) {
+					setNow(moment(defaultValue[0], format));
 					setSelectedRange(defaultValue.map(rng => moment(rng, format)))
 				}
 			} else {
+				setNow(moment(defaultValue, format));
 				setSelectedDay(moment(defaultValue, format));
 			}
 		}
@@ -232,11 +234,11 @@ const Calendar = ({className, type="standard", defaultValue, onChange, format="Y
 					newRange = [day];
 				} else if (range?.length === 1) {
 					newRange = [...range, day];
+					if (onChange) {
+						onChange(newRange.map(rangeitem => rangeitem.format(format)), newRange);
+					}
 				}
 
-				if (onChange) {
-					onChange(newRange.map(rangeitem => rangeitem.format(format)), newRange);
-				}
 				return newRange;
 			})
 
@@ -320,6 +322,28 @@ const Calendar = ({className, type="standard", defaultValue, onChange, format="Y
 			</div>
 		</CalendarStyle>
 	)
+}
+
+Calendar.propTypes = {
+	className: PropTypes.string,
+	type: PropTypes.oneOf(["standard", "range"]).isRequired,
+	defaultValue: PropTypes.oneOfType([
+		PropTypes.string, 
+		PropTypes.arrayOf(PropTypes.string)
+	]),
+	onChange: PropTypes.func,
+	format: PropTypes.string.isRequired,
+	prevYears: PropTypes.number.isRequired,
+	nextYears: PropTypes.number.isRequired,
+	min: PropTypes.string,
+	max: PropTypes.string,
+}
+
+Calendar.defaultProps = {
+	format: "YYYY-M-D",
+	type: "standard",
+	prevYears: 10,
+	nextYears: 0
 }
 
 export default Calendar;

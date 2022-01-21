@@ -1,4 +1,5 @@
 import React, { useRef } from "react";
+import PropTypes from 'prop-types';
 import { createRef } from "react";
 import { useEffect } from "react";
 import { useState } from "react";
@@ -148,6 +149,26 @@ const DropDown = ({className, iref, defaultValue, onChange, options, disabled, p
 			</div>
 		</Style>
 	)
+}
+
+DropDown.propTypes = {
+	className: PropTypes.string,
+	defaultValue: PropTypes.any,
+	onChange: PropTypes.func,
+	options: PropTypes.arrayOf(PropTypes.shape({
+		label: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.number
+		]),
+		value: PropTypes.oneOfType([
+			PropTypes.string,
+			PropTypes.number,
+			PropTypes.bool
+		])
+	})).isRequired,
+	disabled: PropTypes.bool,
+	placeholder: PropTypes.string,
+	labelRenderer: PropTypes.func
 }
 
 export default DropDown;
