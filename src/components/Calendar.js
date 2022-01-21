@@ -126,7 +126,7 @@ const CalendarStyle = styled.div`
 		}
 	}
 `
-const Calendar = ({className, defaultValue, onChange, format="YYYY-M-D", prevYears=10, nextYears=0, min, max}) => {
+const Calendar = ({className, type="standard", defaultValue, onChange, format="YYYY-M-D", prevYears=10, nextYears=0, min, max}) => {
 	
 	moment.locale('fa');
 	
@@ -139,6 +139,7 @@ const Calendar = ({className, defaultValue, onChange, format="YYYY-M-D", prevYea
 	
 	const [now, setNow] = useState(m);
 	const [selectedDay, setSelectedDay] = useState();
+	const [selectedRange, setSelectedRange] = useState();
 
 	const minDate = min ? moment(min, format) : null;
 	const maxDate = max ? moment(max, format) : null;
@@ -157,10 +158,16 @@ const Calendar = ({className, defaultValue, onChange, format="YYYY-M-D", prevYea
 	useEffect(() => {
 		if (defaultValue !== undefined && moment(defaultValue, format).isValid()) {
 			setNow(moment(defaultValue, format));
-			setSelectedDay(moment(defaultValue, format));
+
+			if (type === "range") {
+				if (Array.isArray(defaultValue)) {
+					setSelectedRange(defaultValue.map(rng => moment(rng, format)))
+				}
+			} else {
+				setSelectedDay(moment(defaultValue, format));
+			}
 		}
 	}, [defaultValue]);
-
 
 	// change date functions
 	const handlePrevMonth = () => {
@@ -189,8 +196,15 @@ const Calendar = ({className, defaultValue, onChange, format="YYYY-M-D", prevYea
 		
 		let cls = "cal__table__cell";
 
-		if (selectedDay && today.isSame(selectedDay, 'day')) {
-			cls += ' cal__table__cell--selected';
+		if (type === "range") {
+
+			if (selectedRange && ( (selectedRange.length===1 && today.isSame(selectedRange[0], 'day')) || (selectedRange.length === 2 && today.isBetween(...selectedRange, undefined, '[]')))) {
+				cls += ' cal__table__cell--selected';
+			}
+		} else {
+			if (selectedDay && today.isSame(selectedDay, 'day')) {
+				cls += ' cal__table__cell--selected';
+			}
 		}
 
 		if ((maxDate && today.isAfter(maxDate)) || (minDate && today.isBefore(minDate))) {
@@ -208,11 +222,31 @@ const Calendar = ({className, defaultValue, onChange, format="YYYY-M-D", prevYea
 	}
 
 	const handleClickCell = (day) => {
-		setSelectedDay(day);
-		setNow(day);
-		if (onChange) {
-			onChange(day.format(format), day);
+
+		if (type === "range") {
+			setSelectedRange(range => {
+
+				let newRange;
+
+				if (!Array.isArray(range) || [0, 2].includes(range?.length)) {
+					newRange = [day];
+				} else if (range?.length === 1) {
+					newRange = [...range, day];
+				}
+
+				if (onChange) {
+					onChange(newRange.map(rangeitem => rangeitem.format(format)), newRange);
+				}
+				return newRange;
+			})
+
+		} else {
+			setSelectedDay(day);
+			if (onChange) {
+				onChange(day.format(format), day);
+			}
 		}
+		setNow(day);
 	}
 
 	const getYears = (now) => {
