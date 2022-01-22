@@ -6,7 +6,7 @@ import { DropDown } from "..";
 
 const CalendarStyle = styled.div`
 	border: 1px solid #eee;
-	padding: 35px;
+	padding: 15px 25px;
 	text-align: center;
 	width: max-content;
 	border-radius: 4px;

@@ -8,8 +8,12 @@ import Calendar from "./Calendar";
 const DatePickerStyle = styled.div`
 	position: relative;
 	width: max-content;
-	/* display: inline-block; */
+	overflow: hidden;
 	.dpicker {
+		&__container {
+			padding-top: 3px;
+			padding-bottom: 3px;
+		}
 		&__input {
 			background: #fff;
 			padding: 8px 12px;
@@ -19,10 +23,10 @@ const DatePickerStyle = styled.div`
 			border: 1px solid #babacc;
 			color: #000;
 			border-radius: 4px;
-			box-sizing: border-box;
-			margin-top: 3px;
-			margin-bottom:3px;
+			/* margin-top: 13px;
+			margin-bottom:3px; */
 			transition: border-color .2s, color .2s;
+			box-sizing: border-box;
 
 			&[type="number"] {
 				-moz-appearance: textfield;
@@ -111,6 +115,7 @@ const DatePickerStyle = styled.div`
 		}
 	}
 	${({isCalendarOpen}) => isCalendarOpen ? `
+		overflow: visible;
 		.dpicker {
 			&__calendar {
 				opacity: 1;
@@ -168,8 +173,10 @@ export const DatePicker = ({className, defaultValue, onChange, format, inputClas
 
 	return (
 		<DatePickerStyle ref={containerRef} isCalendarOpen={isCalendarOpen} className={className} calendarPosition={calendarPosition}>
-			<input readOnly={true} className={`${inputClassName} dpicker__input`} value={value} onClick={handleInputFocus} onFocus={handleInputFocus} />
-			<Calendar className="dpicker__calendar" defaultValue={defaultValue} onChange={handleChange} {...otherProps} />
+			<div className="dpicker__container">
+				<input readOnly={true} className={`${inputClassName} dpicker__input`} value={value} onClick={handleInputFocus} onFocus={handleInputFocus} />
+				<Calendar className="dpicker__calendar" defaultValue={defaultValue} onChange={handleChange} {...otherProps} />
+			</div>
 		</DatePickerStyle>
 	)
 }
