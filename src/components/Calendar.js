@@ -126,8 +126,55 @@ const CalendarStyle = styled.div`
 			}
 		}
 	}
+	${({small}) => small ? `
+		padding: 10px 15px;
+		.cal {
+			&__header {
+				font-size: 13px;
+				&__month {
+
+				}
+				&__current {
+
+				}
+				&__year {
+					.dd__valtext {
+						font-size: 13px;
+						padding: 5px 8px 5px 12px;
+						&::before {
+							width: 4px;
+							height: 4px;
+						}
+					}
+				}
+			}
+			&__table {
+				width: 210px;
+				&__cell {
+					height: 30px;
+					font-size: 12px;
+					&__meta {
+						display: none;
+					}
+					&--head {
+						font-size: 0;
+						&::after {
+							content: attr(data-shortname);
+							font-size: 14px;
+						}
+					}
+					&::before {
+						left: 2px;
+						right: 2px;
+						top: 1px;
+						bottom: 3px;
+					}
+				}
+			}
+		}
+	` : ''}
 `
-const Calendar = ({className, type, defaultValue, onChange, format, prevYears, nextYears, min, max}) => {
+const Calendar = ({className, type, defaultValue, onChange, format, prevYears, nextYears, min, max, small}) => {
 	
 	moment.locale('fa');
 	
@@ -294,12 +341,12 @@ const Calendar = ({className, type, defaultValue, onChange, format, prevYears, n
 	}
 
 	return (
-		<CalendarStyle className={className}>
+		<CalendarStyle className={className} small={small}>
 			<div className="cal__header">
 				<div className={`cal__header__month ${isPrevMonthActive(now) ? '' : 'cal__header__month--disabled'}`} onClick={() => handlePrevMonth()}>ماه قبل</div>
 				<div className="cal__header__current">
 					{now.format("MMMM ")}
-					<DropDown options={getYears(now)?.map(y => ({
+					<DropDown className="cal__header__year" options={getYears(now)?.map(y => ({
 						label: y,
 						value: y
 					}))} defaultValue={now?.year()} onChange={y => onChangeYear(now, y)} />

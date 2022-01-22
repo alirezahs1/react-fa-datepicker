@@ -160,6 +160,22 @@ const App = () => {
 				</Code>
 				<br/>
 
+				<h2>۳.۵ اندازه کوچک</h2>
+				<Calendar 
+					className="mx-auto" 
+					small={true}
+					onChange={(d, dateObject) => console.log(d, dateObject)} 
+					/>
+					<br/>
+				<Code language="javascript" style={darcula}>
+{`<Calendar
+	small={true}
+	onChange={(d, dateObject) => console.log(d, dateObject)} // check browser console
+/>`}
+				</Code>
+
+				<br/>
+
 
 				<h2>۴. انتخاب بازه</h2>
 				<Calendar 
