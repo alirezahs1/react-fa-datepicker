@@ -212,8 +212,10 @@ const Calendar = ({className, type, defaultValue, onChange, format, prevYears, n
 					setSelectedRange(defaultValue.map(rng => moment(rng, format)))
 				}
 			} else {
-				setNow(moment(defaultValue, format));
-				setSelectedDay(moment(defaultValue, format));
+				if (moment(defaultValue, format).isValid()) {
+					setNow(moment(defaultValue, format));
+					setSelectedDay(moment(defaultValue, format));
+				}
 			}
 		}
 	}, [defaultValue]);
