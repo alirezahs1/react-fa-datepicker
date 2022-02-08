@@ -128,7 +128,7 @@ const DatePickerStyle = styled.div`
 		}
 	` : ''}
 `
-export const DatePicker = ({className, defaultValue, onChange, format, inputClassName, calendarPosition, ...otherProps}) => {
+export const DatePicker = ({className, defaultValue, onChange, format, inputClassName, calendarPosition, placeholder, ...otherProps}) => {
 
 	const [value, setValue] = useState();
 	const [isCalendarOpen, setIsCalendarOpen] = useState(false);
@@ -174,7 +174,7 @@ export const DatePicker = ({className, defaultValue, onChange, format, inputClas
 	return (
 		<DatePickerStyle ref={containerRef} isCalendarOpen={isCalendarOpen} className={className} calendarPosition={calendarPosition}>
 			<div className="dpicker__container">
-				<input readOnly={true} className={`${inputClassName} dpicker__input`} value={value} onClick={handleInputFocus} onFocus={handleInputFocus} />
+				<input readOnly={true} className={`${inputClassName} dpicker__input`} value={value} onClick={handleInputFocus} onFocus={handleInputFocus} placeholder={placeholder} />
 				<Calendar className="dpicker__calendar" defaultValue={defaultValue} onChange={handleChange} {...otherProps} />
 			</div>
 		</DatePickerStyle>
