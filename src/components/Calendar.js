@@ -66,13 +66,12 @@ const CalendarStyle = styled.div`
 				&::before {
 					position: absolute;
 					content: '';
-					left: 8px;
-					right: 8px;
-					top: 6px;
-					bottom: 10px;
-					border-radius: 50%;
+					left: 0;
+					right: 0;
+					top: 2px;
+					bottom: 2px;
 					background-color: rgba(0, 0, 0, 0);
-					border: 1px solid transparent;
+					border-color: #0033B6;
 					transition: border-color .2s, background-color .2s;
 					@media only screen and (max-width: 600px) {
 						left: 3px;
@@ -84,16 +83,14 @@ const CalendarStyle = styled.div`
 				&__meta {
 					font-size: 10px;
 					position: absolute;
-					bottom: 3px;
+					bottom: 6px;
 					left: 50%;
 					transform: translateX(-50%);
 					transition: bottom .2s .3s;
 				}
 				&--head {
 					font-size: 11px;
-					/* border: 1px solid; */
 					@media only screen and (max-width: 600px) {
-						/* visibility: hidden; */
 						font-size: 0;
 						&::after {
 							content: attr(data-shortname);
@@ -112,11 +109,26 @@ const CalendarStyle = styled.div`
 				&--selected {
 					color: #0033B6;
 					&::before {
-						border-color: #0033B6;
+						border-top: 1px solid;
+						border-bottom: 1px solid;
+						background-color: rgba(8, 0, 182, 0.05);
 					}
-					.cal__table__cell__meta {
-						bottom: -3px;
-						transition: bottom .2s;
+					&:not(:last-child) {
+						border-left: none;
+					}
+					&.cal__table__cell--firstWeekDay, &.cal__table__cell--firstOfRange {
+						&::before {
+							border-right: 1px solid;
+							border-top-right-radius: 4px;
+							border-bottom-right-radius: 4px;
+						}
+					}
+					&.cal__table__cell--lastWeekDay, &.cal__table__cell--lastOfRange {
+						&::before {
+							border-left: 1px solid;
+							border-top-left-radius: 4px;
+							border-bottom-left-radius: 4px;
+						}
 					}
 				}
 				&--disabled {
@@ -249,9 +261,23 @@ const Calendar = ({className, type, defaultValue, onChange, format, prevYears, n
 
 		if (type === "range") {
 
-			if (selectedRange && ( (selectedRange.length===1 && today.isSame(selectedRange[0], 'day')) || (selectedRange.length === 2 && today.isBetween(...selectedRange, undefined, '[]')))) {
-				cls += ' cal__table__cell--selected';
+			if (selectedRange) {
+				if (selectedRange.length===1 && today.isSame(selectedRange[0], 'day')) {
+					cls += ' cal__table__cell--selected';
+					cls += ' cal__table__cell--firstOfRange';
+					cls += ' cal__table__cell--lastOfRange';
+				} else if ( (selectedRange.length === 2 && today.isBetween(...selectedRange, undefined, '[]')) ) {
+					cls += ' cal__table__cell--selected';
+
+					if (today.isSame(selectedRange[0], 'day')) {
+						cls += ' cal__table__cell--firstOfRange';
+					}
+					if (today.isSame(selectedRange[1], 'day')) {
+						cls += ' cal__table__cell--lastOfRange';
+					}
+				}
 			}
+
 		} else {
 			if (selectedDay && today.isSame(selectedDay, 'day')) {
 				cls += ' cal__table__cell--selected';
@@ -262,6 +288,13 @@ const Calendar = ({className, type, defaultValue, onChange, format, prevYears, n
 			cls += ' cal__table__cell--disabled'
 		} else {
 			cls += ' cal__table__cell--active'
+		}
+
+		if (today.day() === 5) {
+			cls += ' cal__table__cell--lastWeekDay';
+		}
+		if (today.day() === 6) {
+			cls += ' cal__table__cell--firstWeekDay';
 		}
 		
 		return (
